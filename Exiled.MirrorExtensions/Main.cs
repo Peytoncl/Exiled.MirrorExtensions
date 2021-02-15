@@ -7,6 +7,9 @@ namespace Exiled.MirrorExtensions
 {
 	public static class Main
 	{
+		// version
+		public static readonly System.Version version = new System.Version(1, 0, 0);
+
 		/// <summary>
 		/// Send custom values to client's <see cref="Mirror.SyncVarAttribute"/>.
 		/// </summary>
@@ -26,7 +29,8 @@ namespace Exiled.MirrorExtensions
 		/// </example>
 		public static void SendCustomSyncVar(this Player target, NetworkIdentity behaviorOwner, Type targetType, string propertyName, object value)
 		{
-			Action<NetworkWriter> customSyncVarGenerator = (targetWriter) => {
+			Action<NetworkWriter> customSyncVarGenerator = (targetWriter) =>
+			{
 				targetWriter.WritePackedUInt64(GetDirtyBit(targetType, propertyName));
 				GetWriteExtension(value)?.Invoke(null, new object[] { targetWriter, value });
 			};
